@@ -21,7 +21,7 @@ const signup = async (req, res) => {
                 .json({ message: 'User is already exist, you can login', success: false });
         }
         const userModel = new UserModel({ name, email, password });
-        // userModel.password = await bcrypt.hash(password, 10);
+        userModel.password = await bcrypt.hash(password, 10);
         await userModel.save();
         res.status(201).json({ message: "true" })
 
@@ -46,18 +46,18 @@ const login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await UserModel.findOne({ email });
-        console.log(user)
+        // console.log(user)
         const errorMsg = 'Auth failed email or password is wrong';
         if (!user) {
             return res.status(403)
                 .json({ message: errorMsg, success: false });
         }
-        // const isPassEqual = await bcrypt.compare(password, user.password);
-       
-        // if (!isPassEqual) {
-        //     return res.status(403)
-        //         .json({ message: errorMsg, success: false });
-        // }
+        const isPassEqual = await bcrypt.compare(password, user.password);
+        console.log(isPassEqual)
+        if (!isPassEqual) {
+            return res.status(403)
+                .json({ message: errorMsg, success: false });
+        }
         // const jwtToken = jwt.sign(
         //     { email: user.email, _id: user._id },
         //     process.env.JWT_SECRET,
