@@ -9,7 +9,7 @@ const AuthRouter = require('.//routes/authrouter');
 
 
 require('./models/db');
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 5500;
 
 app.get('/', (req, res) => {
     res.send('PONG');

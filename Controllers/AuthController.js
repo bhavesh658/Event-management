@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const UserModel = require("../models/User");
 
 
@@ -58,12 +58,12 @@ const login = async (req, res) => {
             return res.status(403)
                 .json({ message: errorMsg, success: false });
         }
-        // const jwtToken = jwt.sign(
-        //     { email: user.email, _id: user._id },
-        //     process.env.JWT_SECRET,
-        //      { expiresIn: '24h' }
+        const jwtToken = jwt.sign(
+            { email: user.email, _id: user._id },
+            process.env.JWT_SECRET||"abcgd",
+             { expiresIn: '24h' }
             
-        // )
+        )
 
         res.status(200)
             .json({
