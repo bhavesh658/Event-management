@@ -1,11 +1,10 @@
-const dot=require('dotenv');
-
+require('dotenv');
 const express = require('express');
 const app = express();
 
 
 const cors = require('cors');
-const AuthRouter = require('.//routes/authrouter');
+const AuthRouter = require('./routes/authrouter');
 
 
 require('./models/db');

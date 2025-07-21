@@ -6,7 +6,7 @@ const UserModel = require("../models/User");
 const signup = async (req, res) => {
 
     try {
-     
+
         const { name, email, password } = req.body;
         if (!name || !email || !password) {
             return res.status(400)
@@ -59,18 +59,19 @@ const login = async (req, res) => {
             return res.status(403)
                 .json({ message: errorMsg, success: false });
         }
-        const jwtToken = jwt.sign(
-            { email: user.email, _id: user._id },
-            process.env.JWT_SECRET||"abcgd",
-             { expiresIn: '24h' }
-            
-        )
+        const token = jwt.sign(
+            { id: user._id, name: user.name },
+            'mySecret123',  // TEMPORARY only for testing
+            { expiresIn: '24h' }
+        );
+
+
 
         res.status(200)
             .json({
                 message: "Login Success",
                 success: true,
-                // jwtToken,
+                token:"generatedToken",
                 email,
                 name: user.name
             })
@@ -85,6 +86,6 @@ const login = async (req, res) => {
 }
 
 module.exports = {
-    signup,login
+    signup, login
 
 }
